@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"container/list"
 	"fmt"
 	"os"
 	"strings"
@@ -26,6 +27,18 @@ func respond(message *babashka.Message, response interface{}) {
 	}
 }
 
+func listToStringSlice(l *list.List) ([]string, error) {
+	var result []string
+	for e := l.Front(); e != nil; e = e.Next() {
+		str, ok := e.Value.(string)
+		if !ok {
+			return nil, fmt.Errorf("element is not a string")
+		}
+		result = append(result, str)
+	}
+	return result, nil
+}
+
 func parseArgs(args string) ([]string, error) {
 	reader := strings.NewReader(args)
 	decoder := transit.NewDecoder(reader)
@@ -33,10 +46,9 @@ func parseArgs(args string) ([]string, error) {
 	if err != nil {
 		return []string{}, err
 	}
-	interfaceSlice := value.([]interface{})
-	retval := make([]string, len(interfaceSlice))
-	for i, v := range interfaceSlice {
-		retval[i] = fmt.Sprint(v)
+	retval, err := listToStringSlice(value.(*list.List))
+	if err != nil {
+		return []string{}, err
 	}
 	return retval, nil
 }
