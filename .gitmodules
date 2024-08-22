@@ -1,0 +1,3 @@
+[submodule "conftest"]
+	path = conftest
+	url = git@github.com:open-policy-agent/conftest.git
