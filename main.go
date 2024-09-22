@@ -46,6 +46,9 @@ func parseArgs(args string) ([]string, error) {
 	if err != nil {
 		return []string{}, err
 	}
+	if value == nil {
+		return nil, nil
+	}
 	retval, err := listToStringSlice(value.(*list.List))
 	if err != nil {
 		return []string{}, err
