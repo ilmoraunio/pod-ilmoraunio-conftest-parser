@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ilmoraunio/pod-conftest-parser/babashka"
+	"github.com/ilmoraunio/pod-ilmoraunio-conftest-parser/babashka"
 	"github.com/open-policy-agent/conftest/parser"
 	"github.com/russolsen/transit"
 )
